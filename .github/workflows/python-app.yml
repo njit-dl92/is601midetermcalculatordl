@@ -15,22 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3  # Correct version; supports Node.js 20
-    
-    # Set up Python 3.10 (or specify a different version of Python 3 if needed)
-    - name: Set up Python 3
-      uses: actions/setup-python@v3  # Using the latest setup-python version compatible with Node.js 20
+    - uses: actions/checkout@v4  # Updated to v4 to avoid Node.js version issues
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4  # Already set to v4 to avoid Node.js deprecation issues
       with:
-        python-version: "3.10"  # Specify the exact version of Python 3 you need (e.g., "3.10", "3.9", etc.)
+        python-version: "3.10"
 
-    # Install dependencies using Python 3
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip  # Explicitly use python3
-        pip3 install flake8 pytest  # Use pip3 to install dependencies
+        python3 -m pip install --upgrade pip  # Explicitly using Python 3
+        pip3 install flake8 pytest  # Use pip3 for Python 3 dependencies
         if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
 
-    # Run tests using Python 3 and pytest
     - name: Test with pytest
       run: |
-        pytest  # Run tests with pytest
+        pytest
